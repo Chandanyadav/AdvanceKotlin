@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveUser(user: UserEntity)
+    fun saveUser(user: UserEntity)
 
     @Query("SELECT * FROM user")
     fun getSavedUser(): Flow<List<UserEntity>>
 
     @Delete
-    suspend fun deleteUser(user: UserEntity)
+    fun deleteUser(user: UserEntity)
 }

@@ -1,19 +1,22 @@
 package com.example.data.mappers
 
+import android.util.Log
 import com.example.data.api.UsersApiResponse
+import com.example.domain.entities.User
 import com.example.domain.entities.UserInfo
 
 class UserApiResponseMapper {
-    fun toVolumeList(response: UsersApiResponse): List<UserInfo> {
-        return null!!
-//        response.items.map {
-//            Volume(
-//                it.id, UserInfo(
-//                    it.volumeInfo.title,
-//                    it.volumeInfo.authors,
-//                    it.volumeInfo.imageLinks?.thumbnail?.replace("http", "https")
-//                )
-//            )
-//        }
+    fun toUser(response: UsersApiResponse): User {
+        return User(
+            response.page,
+            response.data.map {
+              UserInfo(  it.id,
+                it.first_name,
+                it.last_name,
+                it.email,
+                it.avatar
+              )
+            }
+        )
     }
 }

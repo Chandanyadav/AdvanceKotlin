@@ -5,14 +5,15 @@ import com.example.data.api.NetworkModule
 import com.example.data.db.UserDatabase
 import com.example.data.mappers.UserApiResponseMapper
 import com.example.data.mappers.UserEntityMapper
-import com.example.data.repositories.classxyz.UserLocalDataSource
-import com.example.data.repositories.classxyz.UserLocalDataSourceImpl
-import com.example.data.repositories.classxyz.UserRemoteDataSourceImpl
-import com.example.data.repositories.classxyz.UserRepositoryImpl
+import com.example.data.repositories.users.UserLocalDataSource
+import com.example.data.repositories.users.UserLocalDataSourceImpl
+import com.example.data.repositories.users.UserRemoteDataSourceImpl
+import com.example.data.repositories.users.UserRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 
 object ServiceLocator {
     private var database: UserDatabase? = null
+    private var BASE_URL: String = "https://reqres.in/"
     private val networkModule by lazy {
         NetworkModule()
     }
@@ -35,14 +36,12 @@ object ServiceLocator {
             UserRepositoryImpl(
                 createUsersLocalDataSource(context),
                 UserRemoteDataSourceImpl(
-                    networkModule.createUserApi("https://www.googleapis.com/"),
+                    networkModule.createUserApi(BASE_URL),
                     UserApiResponseMapper()
                 )
             )
         userRepository = newRepo
         return newRepo
-        //TODO
-        //BuildConfig.GOOGLE_APIS_ENDPOINT
     }
 
     private fun createUsersLocalDataSource(context: Context): UserLocalDataSource {

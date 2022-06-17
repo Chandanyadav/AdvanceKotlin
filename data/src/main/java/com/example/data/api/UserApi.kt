@@ -5,6 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface UserApi {
-    @GET("/api/users?page=2")
-    suspend fun getUsers(@Query("q") page: Int): Response<UsersApiResponse>
+    @GET("/api/users?")
+    suspend fun getUsers(@Query("page") page: Int): Response<UsersApiResponse>
 }

@@ -6,5 +6,4 @@ data class UserInfo(
     val lastName: String,
     val email: String,
     val avatar: String?
-
 )

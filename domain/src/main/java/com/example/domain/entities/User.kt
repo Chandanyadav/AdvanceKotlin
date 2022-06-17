@@ -1,3 +1,3 @@
 package com.example.domain.entities
 
-data class User(val page: String, val data: List<UserInfo>)
+data class User(val page: Int, val userInfo: List<UserInfo>)

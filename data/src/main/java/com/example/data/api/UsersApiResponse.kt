@@ -1,20 +1,20 @@
 package com.example.data.api
 
+import com.example.domain.entities.UserInfo
 import com.squareup.moshi.Json
 
-class UsersApiResponse(val items: Item)
 
-data class Item(
+data class UsersApiResponse(
     @field:Json(name = "page")
-    val page : String,
+    val page : Int,
     @field:Json(name = "data")
-    val userInfo: ApiUserInfo
+    val data: List<ApiUserInfo>
 )
 
 data class ApiUserInfo(
     val id: String,
-    val firstName: String,
-    val lastName: String,
+    val first_name: String,
+    val last_name: String,
     val email: String,
-    val avtar: String
+    val avatar: String
 )

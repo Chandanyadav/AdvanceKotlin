@@ -2,6 +2,7 @@ package com.example.testkotlinapp.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,7 @@ import com.example.testkotlinapp.TestKotlinBlueprintsApplication
 import kotlinx.android.synthetic.main.fragment_user.*
 
 class UserFragment : Fragment() {
-    private lateinit var userAdapter: UserAdapter
+    lateinit var userAdapter: UserAdapter
 
     private val userViewModel: UserViewModel by viewModels {
         UserViewModel.UserViewModelFactory(
@@ -25,7 +26,7 @@ class UserFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        userAdapter = UserAdapter(requireContext(), arrayListOf())
         userViewModel.getUsers(2)
     }
 
@@ -37,10 +38,12 @@ class UserFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_user, container, false)
     }
 
-    @SuppressLint("StringFormatInvalid")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        userViewModel.users.observe(viewLifecycleOwner, {
+            userAdapter.updateUsers(it)
+        })
 
         userViewModel.dataLoading.observe(viewLifecycleOwner, { loading ->
             when (loading) {
@@ -58,7 +61,7 @@ class UserFragment : Fragment() {
         userViewModel.error.observe(viewLifecycleOwner, {
             Toast.makeText(
                 requireContext(),
-                getString(R.string.an_error_has_occurred, it),
+                getString(R.string.an_error_has_occurred),
                 Toast.LENGTH_SHORT
             ).show()
         })

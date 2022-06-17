@@ -1,5 +1,6 @@
-package com.example.data.repositories.classxyz
+package com.example.data.repositories.users
 
+import android.util.Log
 import com.example.data.api.UserApi
 import com.example.data.mappers.UserApiResponseMapper
 import kotlinx.coroutines.Dispatchers
@@ -16,12 +17,14 @@ class UserRemoteDataSourceImpl(
         withContext(Dispatchers.IO) {
             try {
                 val response = service.getUsers(page)
+
                 if (response.isSuccessful) {
-                    return@withContext Result.Success(mapper.toVolumeList(response.body()!!))
+                    return@withContext Result.Success(mapper.toUser(response.body()!!))
                 } else {
                     return@withContext Result.Error(Exception(response.message()))
                 }
             } catch (e: Exception) {
+                Log.d("APIResponseException ", e.toString())
                 return@withContext Result.Error(e)
             }
         }
