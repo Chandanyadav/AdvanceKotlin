@@ -9,14 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.testkotlinapp.LayoutUtils
+import com.example.testkotlinapp.Listener.OnItemClickListener
 import com.example.testkotlinapp.R
 import com.example.testkotlinapp.TestKotlinBlueprintsApplication
 import kotlinx.android.synthetic.main.fragment_user.*
 
-class UserFragment : Fragment() {
+class UserFragment : Fragment(), OnItemClickListener {
     lateinit var userAdapter: UserAdapter
+
 
     private val userViewModel: UserViewModel by viewModels {
         UserViewModel.UserViewModelFactory(
@@ -26,7 +31,9 @@ class UserFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userAdapter = UserAdapter(requireContext(), arrayListOf())
+        findNavController().navigate(R.id.action_userFragment_to_userDetailsFragment)
+
+        userAdapter = UserAdapter(requireContext(), arrayListOf(), this)
         userViewModel.getUsers(2)
     }
 
@@ -71,4 +78,9 @@ class UserFragment : Fragment() {
         const val COLUMNS_COUNT = 2
     }
 
+    override fun onItemClick(userId: String) {
+        println("UserID $userId")
+
+        findNavController().navigate(R.id.action_userFragment_to_userDetailsFragment)
+    }
 }
