@@ -14,6 +14,10 @@ class UserLocalDataSourceImpl(
     private val userEntityMapper: UserEntityMapper
 ) : UserLocalDataSource {
 
+    override suspend fun saveUsers(userInfo: UserInfo) {
+        userDao.saveUsers(userEntityMapper.toUserEntity(userInfo))
+    }
+
     override suspend fun getUsers(): Flow<List<UserInfo>> {
         val savedUsersFlow = userDao.getSavedUser()
         return savedUsersFlow.map { list ->

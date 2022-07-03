@@ -1,4 +1,4 @@
-package com.example.testkotlinapp.presentation
+package com.example.testkotlinapp.presentation.activity
 
 import android.content.Intent
 

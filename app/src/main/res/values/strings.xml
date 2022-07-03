@@ -20,4 +20,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="an_error_has_occurred">Something went wrong</string>
+
+    <!-- CardView -->
+    <string name="card_view">Card View</string>
 </resources>

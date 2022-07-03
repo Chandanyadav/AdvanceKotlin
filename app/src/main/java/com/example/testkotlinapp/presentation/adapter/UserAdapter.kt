@@ -1,4 +1,4 @@
-package com.example.testkotlinapp.presentation
+package com.example.testkotlinapp.presentation.adapter
 
 
 import android.content.Context
@@ -10,13 +10,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.domain.entities.UserInfo
+import com.example.testkotlinapp.Listener.OnItemClickListener
 import com.example.testkotlinapp.R
 import com.example.testkotlinapp.common.Constants.Companion.SINGLE_SPACE
 
 class UserAdapter(
     private val context: Context,
-    private var users: ArrayList<UserInfo>
-) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+    private var users: ArrayList<UserInfo>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     fun updateUsers(newUsers: List<UserInfo>) {
         users.clear()
@@ -24,8 +26,8 @@ class UserAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
-        return ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): UserViewHolder {
+        return UserViewHolder(
             LayoutInflater.from(context).inflate(
                 R.layout.item_user,
                 parent,
@@ -38,7 +40,7 @@ class UserAdapter(
         return users.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         users[position].also { user ->
             user.avatar?.let { imageUrl ->
                 Glide.with(context)
@@ -57,10 +59,17 @@ class UserAdapter(
     }
 
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvFirstLastName: TextView = view.findViewById(R.id.tvFirstLastName)
-        val tvEmail: TextView = view.findViewById(R.id.tvEmail)
-        val ivUserCover: ImageView = view.findViewById(R.id.ivUserCover)
+    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvFirstLastName: TextView = itemView.findViewById(R.id.tvFirstLastName)
+        val tvEmail: TextView = itemView.findViewById(R.id.tvEmail)
+        val ivUserCover: ImageView = itemView.findViewById(R.id.ivUserCover)
+
+        init {
+            itemView.setOnClickListener {
+                listener.onItemClick(users[adapterPosition].id )
+            }
+
+        }
 
     }
 }

@@ -1,32 +1,38 @@
-package com.example.testkotlinapp.presentation
+package com.example.testkotlinapp.presentation.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.testkotlinapp.LayoutUtils
+import com.example.testkotlinapp.Listener.OnItemClickListener
 import com.example.testkotlinapp.R
 import com.example.testkotlinapp.TestKotlinBlueprintsApplication
+import com.example.testkotlinapp.presentation.adapter.UserAdapter
+import com.example.testkotlinapp.presentation.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_user.*
 
-class UserFragment : Fragment() {
+class UserFragment : Fragment(), OnItemClickListener {
     lateinit var userAdapter: UserAdapter
+
 
     private val userViewModel: UserViewModel by viewModels {
         UserViewModel.UserViewModelFactory(
             ((requireActivity().application) as TestKotlinBlueprintsApplication).getUserUseCase,
+            ((requireActivity().application) as TestKotlinBlueprintsApplication).saveUserUseCase,
+            ((requireActivity().application) as TestKotlinBlueprintsApplication).getLocalUserUseCase,
         )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userAdapter = UserAdapter(requireContext(), arrayListOf())
+        userAdapter = UserAdapter(requireContext(), arrayListOf(), this)
         userViewModel.getUsers(2)
     }
 
@@ -40,6 +46,15 @@ class UserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        obserbViewModel()
+
+    }
+
+    companion object {
+        const val COLUMNS_COUNT = 2
+    }
+
+    private fun obserbViewModel() {
 
         userViewModel.users.observe(viewLifecycleOwner, {
             userAdapter.updateUsers(it)
@@ -67,8 +82,10 @@ class UserFragment : Fragment() {
         })
     }
 
-    companion object {
-        const val COLUMNS_COUNT = 2
+    override fun onItemClick(userId: String) {
+        println("UserID $userId")
+        val action: NavDirections = UserFragmentDirections.actionUserFragmentToUserDetailsFragment()
+            .setUserId(userId.toInt())
+        findNavController().navigate(action)
     }
-
 }
