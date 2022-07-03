@@ -1,4 +1,4 @@
-package com.example.testkotlinapp.presentation
+package com.example.testkotlinapp.presentation.adapter
 
 
 import android.content.Context

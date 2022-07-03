@@ -7,8 +7,8 @@ import com.example.data.mappers.UserApiResponseMapper
 import com.example.data.mappers.UserEntityMapper
 import com.example.data.repositories.users.UserLocalDataSource
 import com.example.data.repositories.users.UserLocalDataSourceImpl
-import com.example.data.repositories.users.UserRemoteDataSourceImpl
-import com.example.data.repositories.users.UserRepositoryImpl
+import com.example.data.repositories.users.RemoteDataSourceImpl
+import com.example.data.repositories.users.RepositoryImpl
 import kotlinx.coroutines.Dispatchers
 
 object ServiceLocator {
@@ -22,25 +22,25 @@ object ServiceLocator {
     }
 
     @Volatile
-    var userRepository: UserRepositoryImpl? = null
+    var repository: RepositoryImpl? = null
 
-    fun provideusersRepository(context: Context): UserRepositoryImpl {
+    fun provideusersRepository(context: Context): RepositoryImpl {
         // useful because this method can be accessed by multiple threads
         synchronized(this) {
-            return userRepository ?: createUsersRepository(context)
+            return repository ?: createUsersRepository(context)
         }
     }
 
-    private fun createUsersRepository(context: Context): UserRepositoryImpl {
+    private fun createUsersRepository(context: Context): RepositoryImpl {
         val newRepo =
-            UserRepositoryImpl(
+            RepositoryImpl(
                 createUsersLocalDataSource(context),
-                UserRemoteDataSourceImpl(
+                RemoteDataSourceImpl(
                     networkModule.createUserApi(BASE_URL),
                     UserApiResponseMapper()
                 )
             )
-        userRepository = newRepo
+        repository = newRepo
         return newRepo
     }
 

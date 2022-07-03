@@ -1,4 +1,4 @@
-package com.example.testkotlinapp.presentation
+package com.example.testkotlinapp.presentation.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -25,5 +25,4 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
     }
-    //TODO
 }

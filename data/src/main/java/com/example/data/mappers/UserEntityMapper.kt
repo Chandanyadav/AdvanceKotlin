@@ -5,15 +5,15 @@ import com.example.domain.entities.User
 import com.example.domain.entities.UserInfo
 
 class UserEntityMapper {
-//    fun toUserEntity(user: User): UserEntity {
-//        return UserEntity(
-//            id = user.data[0].id,
-//            firstName = user.data[0].firstName,
-//            lastName = user.data[0].lastName,
-//            email = user.data[0].email,
-//            avtar = user.data[0].id
-//        )
-//    }
+    fun toUserEntity(userInfo: UserInfo): UserEntity {
+        return UserEntity(
+            id = userInfo.id,
+            firstName = userInfo.firstName,
+            lastName = userInfo.lastName,
+            email = userInfo.email,
+            avtar = userInfo.id
+        )
+    }
 
     fun toUserInfo(userEntity: UserEntity): UserInfo {
         return UserInfo(

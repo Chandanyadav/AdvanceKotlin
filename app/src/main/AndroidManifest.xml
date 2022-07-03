@@ -3,6 +3,8 @@
     package="com.example.testkotlinapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".TestKotlinBlueprintsApplication"
@@ -13,20 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestKotlinApp">
         <activity
-            android:name=".presentation.SplashScreenActivity"
-            android:theme="@style/SplashTheme"
+            android:name=".presentation.activity.SplashScreenActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".presentation.MainActivity">
-        </activity>
+        <activity android:name=".presentation.activity.MainActivity"/>
     </application>
 
 </manifest>
