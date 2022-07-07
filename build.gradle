@@ -1,6 +1,8 @@
 buildscript {
-    ext.kotlin_version = "1.4.21"
-    ext.hilt_version = "2.28-alpha"
+    ext.kotlin_version = "1.7.0"
+    ext.hilt_version = "2.42"
+    ext.dagger_hilt_version = "2.28-alpha"
+    ext.safearg_version =  "2.5.0"
     repositories {
         google()
         jcenter()
@@ -9,10 +11,8 @@ buildscript {
         classpath "com.android.tools.build:gradle:4.1.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.5.0")
-//        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$dagger_hilt_version"
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$safearg_version")
     }
 }
 

@@ -14,13 +14,13 @@ import com.example.testkotlinapp.LayoutUtils
 import com.example.testkotlinapp.Listener.OnItemClickListener
 import com.example.testkotlinapp.R
 import com.example.testkotlinapp.TestKotlinBlueprintsApplication
+import com.example.testkotlinapp.common.ConnectionLiveData
 import com.example.testkotlinapp.presentation.adapter.UserAdapter
 import com.example.testkotlinapp.presentation.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_user.*
 
 class UserFragment : Fragment(), OnItemClickListener {
     lateinit var userAdapter: UserAdapter
-
 
     private val userViewModel: UserViewModel by viewModels {
         UserViewModel.UserViewModelFactory(
@@ -32,8 +32,14 @@ class UserFragment : Fragment(), OnItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ConnectionLiveData(requireActivity()).observe(this) {
+            println(it)
+            when (it) {
+                true -> userViewModel.getUsers(2)
+                false -> userViewModel.getLocalUserdata()
+            }
+        }
         userAdapter = UserAdapter(requireContext(), arrayListOf(), this)
-        userViewModel.getUsers(2)
     }
 
     override fun onCreateView(
@@ -56,16 +62,16 @@ class UserFragment : Fragment(), OnItemClickListener {
 
     private fun obserbViewModel() {
 
-        userViewModel.users.observe(viewLifecycleOwner, {
+        userViewModel.users.observe(viewLifecycleOwner) {
             userAdapter.updateUsers(it)
-        })
+        }
 
-        userViewModel.dataLoading.observe(viewLifecycleOwner, { loading ->
+        userViewModel.dataLoading.observe(viewLifecycleOwner) { loading ->
             when (loading) {
                 true -> LayoutUtils.crossFade(pbLoading, rvUsers)
                 false -> LayoutUtils.crossFade(rvUsers, pbLoading)
             }
-        })
+        }
 
         rvUsers.apply {
             layoutManager =
@@ -73,17 +79,16 @@ class UserFragment : Fragment(), OnItemClickListener {
             adapter = userAdapter
         }
 
-        userViewModel.error.observe(viewLifecycleOwner, {
+        userViewModel.error.observe(viewLifecycleOwner) {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.an_error_has_occurred),
                 Toast.LENGTH_SHORT
             ).show()
-        })
+        }
     }
 
     override fun onItemClick(userId: String) {
-        println("UserID $userId")
         val action: NavDirections = UserFragmentDirections.actionUserFragmentToUserDetailsFragment()
             .setUserId(userId.toInt())
         findNavController().navigate(action)

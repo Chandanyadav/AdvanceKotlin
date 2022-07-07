@@ -21,7 +21,7 @@ class RepositoryImpl(
         return localDataSource.getUsers()
     }
 
-    override suspend fun saveUsers(usrInfo: UserInfo) {
+    override suspend fun saveUsers(usrInfo: List<UserInfo>) {
         return localDataSource.saveUsers(usrInfo)
     }
 

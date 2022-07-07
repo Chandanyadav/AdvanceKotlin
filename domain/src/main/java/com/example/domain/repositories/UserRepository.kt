@@ -11,7 +11,7 @@ interface UserRepository {
 
     suspend fun getLocalUsers(): Flow<List<UserInfo>>
 
-    suspend fun saveUsers(usrInfo: UserInfo)
+    suspend fun saveUsers(usrInfo: List<UserInfo>)
 
     suspend fun getUserDetail(userID : Int) : Result<UserDetail>
 

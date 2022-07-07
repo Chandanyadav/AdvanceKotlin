@@ -7,6 +7,10 @@ import com.example.domain.common.Result
 import com.example.domain.entities.UserInfo
 import com.example.domain.usecases.GetLocalUserUseCase
 import com.example.domain.usecases.SaveUserUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 
 class UserViewModel(
@@ -24,15 +28,15 @@ class UserViewModel(
     private var _users = MutableLiveData<List<UserInfo>>()
     val users = _users
 
-    private var userInfoLocal = UserInfo("aaa", "vvvv", "sdfsdfs", "aaa@aa.com", "adasdsad")
-
-
     fun getUsers(page: Int) {
         viewModelScope.launch {
             _dataLoading.postValue(true)
             when (val usersResult = getUserUseCase.invoke(page)) {
                 is Result.Success -> {
-                    _users.value = usersResult.data.userInfo
+                    val userInfo = usersResult.data.userInfo
+                    _users.value = userInfo
+
+                    saveUserUseCase.invoke(userInfo)
                     _dataLoading.postValue(false)
                 }
 
@@ -42,11 +46,20 @@ class UserViewModel(
                 }
             }
         }
+
     }
 
-  //  viewModelScope.launch {
-//                        val saveUser = saveUserUseCase.invoke(userInfoLocal)
-//                    }
+    //Save data in Room database
+    fun getLocalUserdata() {
+        viewModelScope.launch {
+            _dataLoading.postValue(true)
+            val getUserInfoLocal = getLocalUserUseCase.invoke()
+            getUserInfoLocal.collect {
+                _users.postValue(it)
+                _dataLoading.postValue(false)
+            }
+        }
+    }
 
     class UserViewModelFactory(
         private val getUserUseCase: GetUserUseCase,

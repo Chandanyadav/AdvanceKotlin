@@ -10,5 +10,5 @@ data class UserEntity(
     val firstName: String,
     val lastName: String,
     val email: String,
-    val avtar: String
+    val avtaar: String
 )

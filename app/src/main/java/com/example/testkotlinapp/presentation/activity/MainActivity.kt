@@ -6,10 +6,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.testkotlinapp.R
+import dagger.hilt.android.AndroidEntryPoint
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var  navController: NavController
-
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
-         navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         NavigationUI.setupActionBarWithNavController(this, navController)
     }

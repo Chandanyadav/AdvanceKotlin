@@ -8,9 +8,10 @@ import kotlinx.coroutines.withContext
 import com.example.domain.common.Result
 import com.example.domain.entities.User
 import com.example.domain.entities.UserDetail
+import javax.inject.Inject
 
 
-class RemoteDataSourceImpl(
+class RemoteDataSourceImpl  @Inject constructor(
     private val service: UserApi,
     private val mapper: UserApiResponseMapper,
 ) : RemoteDataSource {

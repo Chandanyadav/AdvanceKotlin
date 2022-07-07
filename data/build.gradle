@@ -53,8 +53,13 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
 
-    implementation "com.google.code.gson:gson:$gson_version"
+    //Hilt dagger
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 
+    // Hilt ViewModel
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    kapt "androidx.hilt:hilt-compiler:1.0.0-beta01"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutines_adapter_version"

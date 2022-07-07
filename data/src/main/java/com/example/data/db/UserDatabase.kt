@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 import com.example.data.entities.UserEntity
 
 @Database(entities = [UserEntity::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
 abstract class UserDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 

@@ -5,19 +5,22 @@ import com.example.domain.entities.User
 import com.example.domain.entities.UserInfo
 
 class UserEntityMapper {
-    fun toUserEntity(userInfo: UserInfo): UserEntity {
-        return UserEntity(
-            id = userInfo.id,
-            firstName = userInfo.firstName,
-            lastName = userInfo.lastName,
-            email = userInfo.email,
-            avtar = userInfo.id
-        )
+    fun toUserEntity(userInfo: List<UserInfo>): List<UserEntity> {
+
+        return userInfo.map {
+            UserEntity(
+                it.id,
+                it.firstName,
+                it.lastName,
+                it.email,
+                it.avatar,
+            )
+        }
     }
 
     fun toUserInfo(userEntity: UserEntity): UserInfo {
         return UserInfo(
-            userEntity.id, userEntity.firstName, userEntity.lastName, userEntity.email, userEntity.avtar
+            userEntity.id, userEntity.firstName, userEntity.lastName, userEntity.email, userEntity.avtaar
         )
     }
 }

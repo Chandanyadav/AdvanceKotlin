@@ -5,5 +5,5 @@ data class UserInfo(
     val firstName: String,
     val lastName: String,
     val email: String,
-    val avatar: String?
+    val avatar: String
 )

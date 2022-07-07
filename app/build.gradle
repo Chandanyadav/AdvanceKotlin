@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'androidx.navigation.safeargs'
+    id("dagger.hilt.android.plugin")
 }
 
 apply plugin: 'kotlin-kapt'
@@ -63,6 +64,13 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelKtx_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$viewModelKtx_version"
 
+    //Hilt dagger
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
+
+    // Hilt ViewModel
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    kapt "androidx.hilt:hilt-compiler:1.0.0-beta01"
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_test_version"

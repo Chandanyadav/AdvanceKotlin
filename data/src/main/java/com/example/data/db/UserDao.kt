@@ -9,8 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    @TypeConverters
-    fun saveUsers(user: UserEntity)
+    fun saveUsers(user: List<UserEntity>)
 
     @Query("SELECT * FROM user")
     fun getSavedUser(): Flow<List<UserEntity>>

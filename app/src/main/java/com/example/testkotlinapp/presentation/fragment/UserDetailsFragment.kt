@@ -46,34 +46,35 @@ class UserDetailsFragment : Fragment() {
     }
 
     private fun oversebViewModel(){
-        userDetailViewModel.userDetail.observe(viewLifecycleOwner, {
+        userDetailViewModel.userDetail.observe(viewLifecycleOwner) {
             // userAdapter.updateUsers(it)
             Toast.makeText(
                 requireContext(),
-               it.userInfo.email,
+                it.userInfo.email,
                 Toast.LENGTH_SHORT
             ).show()
             Glide.with(requireContext())
                 .load(it.userInfo.avatar)
                 .into(ivLoadingImg)
-            txtFirstLastName.text = it.userInfo.firstName + Constants.SINGLE_SPACE + it.userInfo.lastName
+            txtFirstLastName.text =
+                it.userInfo.firstName + Constants.SINGLE_SPACE + it.userInfo.lastName
             txtDetail.text = it.userSupport.textInfo
 
-        })
+        }
 
-        userDetailViewModel.dataLoading.observe(viewLifecycleOwner, { loading ->
+        userDetailViewModel.dataLoading.observe(viewLifecycleOwner) { loading ->
             when (loading) {
                 true -> progressBar.visibility = View.VISIBLE
-                false ->progressBar.visibility = View.GONE
+                false -> progressBar.visibility = View.GONE
             }
-        })
+        }
 
-        userDetailViewModel.error.observe(viewLifecycleOwner, {
+        userDetailViewModel.error.observe(viewLifecycleOwner) {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.an_error_has_occurred),
                 Toast.LENGTH_SHORT
             ).show()
-        })
+        }
     }
 }
